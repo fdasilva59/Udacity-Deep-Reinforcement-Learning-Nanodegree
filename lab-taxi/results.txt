@@ -1,0 +1,23 @@
+(/opt/DataScience) [/media/shared/Udacity-DRLND18/deep-reinforcement-learning/lab-taxi]# python main.py
+Episode 20000/20000 || Best average reward 9.128
+
+(/opt/DataScience) [/media/shared/Udacity-DRLND18/deep-reinforcement-learning/lab-taxi]# python main.py
+Episode 20000/20000 || Best average reward 9.079
+
+(/opt/DataScience) [/media/shared/Udacity-DRLND18/deep-reinforcement-learning/lab-taxi]# python main.py
+Episode 20000/20000 || Best average reward 9.047
+
+(/opt/DataScience) [/media/shared/Udacity-DRLND18/deep-reinforcement-learning/lab-taxi]# python main.py
+Episode 20000/20000 || Best average reward 9.193
+
+(/opt/DataScience) [/media/shared/Udacity-DRLND18/deep-reinforcement-learning/lab-taxi]# python main.py
+Episode 20000/20000 || Best average reward 9.136
+
+(/opt/DataScience) [/media/shared/Udacity-DRLND18/deep-reinforcement-learning/lab-taxi]# python main.py
+Episode 20000/20000 || Best average reward 9.018
+
+(/opt/DataScience) [/media/shared/Udacity-DRLND18/deep-reinforcement-learning/lab-taxi]# python main.py
+Episode 20000/20000 || Best average reward 9.223
+
+(/opt/DataScience) [/media/shared/Udacity-DRLND18/deep-reinforcement-learning/lab-taxi]#
+

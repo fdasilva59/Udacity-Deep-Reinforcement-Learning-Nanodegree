@@ -9,10 +9,10 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 BUFFER_SIZE = int(1e5)  # replay buffer size
-BATCH_SIZE = 64         # minibatch size
-GAMMA = 0.99            # discount factor
+BATCH_SIZE = 64         # minibatch size (Initially 64)
+GAMMA = 0.995           # discount factor (Initially 0.99)
 TAU = 1e-3              # for soft update of target parameters
-LR = 5e-4               # learning rate 
+LR = 5e-4               # learning rate (Initially 5e-4)
 UPDATE_EVERY = 4        # how often to update the network
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -88,8 +88,39 @@ class Agent():
         ## TODO: compute and minimize the loss
         "*** YOUR CODE HERE ***"
 
+        # Get max predicted Q values for next states from the target model (frozen weights)
+        #
+        #    next_states is 64x8
+        #    self.qnetwork_target(next_states) is 64x4
+        #    detach() returns a tensor copy detached from the graph (no gradient)
+        #    max(1)[0] returns the the max value in given dim  (max value indexes in 2nd array)
+        #    => This returns an array of 64 values    
+        #    Unsqueeze(1)returns a new Tensor of size one inserted at the given position
+        #    => This returns a 64X1 tensor
+        Q_targets_next = self.qnetwork_target(next_states).detach().max(1)[0].unsqueeze(1)
+        
+        # Compute Q targets for current states 
+        Q_targets = rewards + (gamma * Q_targets_next * (1 - dones))
+
+        # Get expected Q values from local model (being trained)
+        # x.gather(1, actions) returns a tensor (located on the current device) that is the result of
+        # concataining the input tensor values along the provided dimensions (here the dim indexes are the taken actions indexes) 
+        Q_expected = self.qnetwork_local(states).gather(1, actions)
+
+        # Compute loss
+        loss = F.mse_loss(Q_expected, Q_targets)
+        
+        # Minimize the loss
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+        
+        
         # ------------------- update target network ------------------- #
-        self.soft_update(self.qnetwork_local, self.qnetwork_target, TAU)                     
+        self.soft_update(self.qnetwork_local, self.qnetwork_target, TAU)    
+        
+        
+        
 
     def soft_update(self, local_model, target_model, tau):
         """Soft update model parameters.
